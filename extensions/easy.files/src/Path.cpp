@@ -9,7 +9,7 @@ namespace easy::files::details
 	QString urlToPath(const QUrl & url)
 	{
 		if (url.scheme() == "qrc")
-			return url.path().prepend(":");
+			return url.path().prepend(':');
 		else if (url.isLocalFile())
 			return url.toLocalFile();
 		else
@@ -67,37 +67,118 @@ QString Path::type() const
 
 bool Path::isLocal() const
 {
-	return _url.isLocalFile();
+	return valid() && (_url.isLocalFile() || _url.scheme().isEmpty());
 }
 
 bool Path::isResource() const
 {
-	return _url.scheme() == "qrc";
+	return valid() && _url.scheme() == "qrc";
 }
 
 bool Path::isAbsolute() const
 {
 	const auto path = details::urlToPath(_url);
-	return QFileInfo{path}.isAbsolute();
+	return valid() && QFileInfo{path}.isAbsolute();
+}
+
+bool Path::isAlias() const
+{
+	const auto path = details::urlToPath(_url);
+	return valid() && QFileInfo{path}.isAlias();
+}
+
+bool Path::isBundle() const
+{
+	const auto path = details::urlToPath(_url);
+	return valid() && QFileInfo{path}.isBundle();
 }
 
 bool Path::isDir() const
 {
 	const auto path = details::urlToPath(_url);
-	qDebug() << path;
-	return QFileInfo{path}.isDir();
+	return valid() && QFileInfo{path}.isDir();
+}
+
+bool Path::isExecutable() const
+{
+	const auto path = details::urlToPath(_url);
+	return valid() && QFileInfo{path}.isExecutable();
 }
 
 bool Path::isFile() const
 {
 	const auto path = details::urlToPath(_url);
-	return QFileInfo{path}.isFile();
+	return valid() && QFileInfo{path}.isFile();
+}
+
+bool Path::isHidden() const
+{
+	const auto path = details::urlToPath(_url);
+	return valid() && QFileInfo{path}.isHidden();
+}
+
+bool Path::isJunction() const
+{
+	const auto path = details::urlToPath(_url);
+	return valid() && QFileInfo{path}.isJunction();
+}
+
+bool Path::isLink() const
+{
+	const auto path = details::urlToPath(_url);
+	return valid() && QFileInfo{path}.isSymLink();
+}
+
+bool Path::isNative() const
+{
+	const auto path = details::urlToPath(_url);
+	return valid() && QFileInfo{path}.isNativePath();
+}
+
+bool Path::isReadable() const
+{
+	const auto path = details::urlToPath(_url);
+	return valid() && QFileInfo{path}.isReadable();
+}
+
+bool Path::isRelative() const
+{
+	return valid() && !isAbsolute();
+}
+
+bool Path::isRoot() const
+{
+	const auto path = details::urlToPath(_url);
+	return valid() && QFileInfo{path}.isRoot();
+}
+
+bool Path::isShortcut() const
+{
+	const auto path = details::urlToPath(_url);
+	return valid() && QFileInfo{path}.isShortcut();
+}
+
+bool Path::isSymbolicLink() const
+{
+	const auto path = details::urlToPath(_url);
+	return valid() && QFileInfo{path}.isSymbolicLink();
+}
+
+bool Path::isWritable() const
+{
+	const auto path = details::urlToPath(_url);
+	return valid() && QFileInfo{path}.isWritable();
 }
 
 bool Path::exists() const
 {
 	const auto path = details::urlToPath(_url);
 	return QFileInfo{path}.exists();
+}
+
+bool Path::valid() const
+{
+	return _url.isValid();
 }
 
 QString Path::toString() const
@@ -135,7 +216,7 @@ QString Path::bareStem() const
 {
 	using namespace Qt::Literals;
 
-	auto fileName = details::fileName(_url);
+	const auto fileName = details::fileName(_url);
 
 	if (fileName.endsWith('.'))
 	{
@@ -150,7 +231,7 @@ QString Path::bareStem() const
 
 QString Path::stem() const
 {
-	auto fileName = details::fileName(_url);
+	const auto fileName = details::fileName(_url);
 
 	if (fileName.endsWith('.'))
 	{
