@@ -415,6 +415,12 @@ Owner Path::owner() const
 	return Owner{fi.owner(), fi.ownerId()};
 }
 
+qint64 Path::size() const
+{
+	const auto path = details::urlToPath(_url);
+	return QFileInfo{path}.size();
+}
+
 Path Path::absolute() const
 {
 	auto path = _url.isLocalFile() ? _url.toLocalFile() : _url.path();

@@ -64,6 +64,7 @@ namespace easy::files
 		Q_PROPERTY(QDateTime metadataModified READ metadataModified FINAL)
 		Q_PROPERTY(easy::files::Owner group READ group FINAL)
 		Q_PROPERTY(easy::files::Owner owner READ owner FINAL)
+		Q_PROPERTY(qint64 size READ size FINAL)
 
 		Q_PROPERTY(QString scheme READ scheme WRITE setScheme FINAL)
 		Q_PROPERTY(QString user READ user WRITE setUser FINAL)
@@ -125,6 +126,7 @@ namespace easy::files
 		QDateTime metadataModified() const;
 		Owner group() const;
 		Owner owner() const;
+		qint64 size() const;
 
 		Path absolute() const;
 		Path normalized() const;
