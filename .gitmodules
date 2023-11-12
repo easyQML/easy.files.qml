@@ -1,0 +1,3 @@
+[submodule "3rdparty/easy.qmldir.qbs"]
+	path = 3rdparty/easy.qmldir.qbs
+	url = https://github.com/easyQML/easy.qmldir.qbs.git

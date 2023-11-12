@@ -1,0 +1,29 @@
+# top-most EditorConfig file
+root = true
+
+[*]
+indent_style = tab
+indent_size = 4
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[.clang-format]
+indent_style = space
+indent_size = 2
+
+[.commitlintrc*.js]
+indent_style = space
+indent_size = 2
+
+[{*.{yml,yaml},.pages}]
+indent_style = space
+indent_size = 2
+
+[*.py]
+indent_style = space
+indent_size = 4
+
+[*.md]
+indent_style = space
+trim_trailing_whitespace = false
