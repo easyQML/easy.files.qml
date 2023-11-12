@@ -42,6 +42,15 @@ namespace easy::files
 		Q_PROPERTY(QString suffix READ suffix FINAL)
 		Q_PROPERTY(QList<QString> suffixes READ suffixes FINAL)
 
+		Q_PROPERTY(QString scheme READ scheme WRITE setScheme FINAL)
+		Q_PROPERTY(QString user READ user WRITE setUser FINAL)
+		Q_PROPERTY(QString password READ password WRITE setPassword FINAL)
+		Q_PROPERTY(QString host READ host WRITE setHost FINAL)
+		Q_PROPERTY(int port READ port WRITE setPort FINAL)
+		Q_PROPERTY(QString path READ path WRITE setPath FINAL)
+		Q_PROPERTY(QString query READ query WRITE setQuery FINAL)
+		Q_PROPERTY(QString fragment READ fragment WRITE setFragment FINAL)
+
 		QML_VALUE_TYPE(path)
 		// QML_EXTENDED(easy::files::Path)
 		QML_CONSTRUCTIBLE_VALUE
@@ -84,6 +93,30 @@ namespace easy::files
 		QList<QString> suffixes() const;
 
 		Q_INVOKABLE QString toString() const;
+
+		QString scheme() const;
+		void setScheme(const QString & scheme);
+
+		QString user() const;
+		void setUser(const QString & user);
+
+		QString password() const;
+		void setPassword(const QString & password);
+
+		QString host() const;
+		void setHost(const QString & host);
+
+		int port() const;
+		void setPort(const int & port);
+
+		QString path() const;
+		void setPath(const QString & path);
+
+		QString query() const;
+		void setQuery(const QString & query);
+
+		QString fragment() const;
+		void setFragment(const QString & fragment);
 
 	private:
 		QUrl _url;

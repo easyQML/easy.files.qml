@@ -269,3 +269,86 @@ QList<QString> Path::suffixes() const
 
 	return parts;
 }
+
+QString Path::scheme() const
+{
+	return _url.scheme();
+}
+
+void Path::setScheme(const QString & scheme)
+{
+	_url.setScheme(scheme);
+}
+
+QString Path::user() const
+{
+	return _url.userName();
+}
+
+void Path::setUser(const QString & user)
+{
+	_url.setUserName(user);
+}
+
+QString Path::password() const
+{
+	return _url.password();
+}
+
+void Path::setPassword(const QString & password)
+{
+	_url.setPassword(password);
+}
+
+QString Path::host() const
+{
+	return _url.host();
+}
+
+void Path::setHost(const QString & host)
+{
+	_url.setHost(host);
+}
+
+int Path::port() const
+{
+	return _url.port();
+}
+
+void Path::setPort(const int & port)
+{
+	if (port >= -1 && port <= 65535)
+	{
+		_url.setPort(port);
+	}
+}
+
+QString Path::path() const
+{
+	return _url.path();
+}
+
+void Path::setPath(const QString & path)
+{
+	_url.setPath(path);
+}
+
+QString Path::query() const
+{
+	return _url.query();
+}
+
+void Path::setQuery(const QString & query)
+{
+	_url.setQuery(query);
+}
+
+QString Path::fragment() const
+{
+	return _url.fragment();
+}
+
+void Path::setFragment(const QString & fragment)
+{
+	_url.setFragment(fragment);
+}
