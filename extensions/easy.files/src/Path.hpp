@@ -51,12 +51,13 @@ namespace easy::files
 		Q_PROPERTY(QString asString READ asString FINAL)
 		Q_PROPERTY(QUrl asUrl READ asUrl FINAL)
 
+		Q_PROPERTY(QStringList parts READ parts FINAL)
 		Q_PROPERTY(easy::files::Path parent READ parent FINAL)
 		Q_PROPERTY(QString name READ name FINAL)
 		Q_PROPERTY(QString bareStem READ bareStem FINAL)
 		Q_PROPERTY(QString stem READ stem FINAL)
 		Q_PROPERTY(QString suffix READ suffix FINAL)
-		Q_PROPERTY(QList<QString> suffixes READ suffixes FINAL)
+		Q_PROPERTY(QStringList suffixes READ suffixes FINAL)
 		Q_PROPERTY(QDateTime born READ born FINAL)
 		Q_PROPERTY(QDateTime lastModified READ lastModified FINAL)
 		Q_PROPERTY(QDateTime lastRead READ lastRead FINAL)
@@ -111,12 +112,13 @@ namespace easy::files
 		QUrl asUrl() const;
 		QString asString() const;
 
+		QStringList parts() const;
 		Path parent() const;
 		QString name() const;
 		QString bareStem() const;
 		QString stem() const;
 		QString suffix() const;
-		QList<QString> suffixes() const;
+		QStringList suffixes() const;
 		QDateTime born() const;
 		QDateTime lastModified() const;
 		QDateTime lastRead() const;
@@ -153,6 +155,14 @@ namespace easy::files
 
 		QString fragment() const;
 		void setFragment(const QString & fragment);
+
+		Q_INVOKABLE Path join(const QString & rhs) const;
+		Q_INVOKABLE Path join(const QStringList & rhs) const;
+
+		Q_INVOKABLE Path withName(const QString & name) const;
+		Q_INVOKABLE Path withStem(const QString & stem) const;
+		Q_INVOKABLE Path withBareStem(const QString & bareStem) const;
+		Q_INVOKABLE Path withSuffix(const QString & suffix) const;
 
 	private:
 		QUrl _url;

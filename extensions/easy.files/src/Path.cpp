@@ -25,7 +25,7 @@ namespace easy::files::details
 		return QFileInfo{path}.fileName();
 	}
 
-	QList<QString> fileNameParts(const QString & fileName)
+	QStringList fileNameParts(const QString & fileName)
 	{
 		auto parts = fileName.split(".");
 		if (parts.first() == "")
@@ -196,6 +196,30 @@ QUrl Path::asUrl() const
 	return _url;
 }
 
+QStringList Path::parts() const
+{
+	auto path = _url.path();
+	if (path.endsWith("/"))
+		path.chop(1);
+
+	QStringList result;
+	result << _url.adjusted(QUrl::RemovePath | QUrl::RemoveQuery | QUrl::RemoveFragment | QUrl::StripTrailingSlash)
+				  .toString();
+
+	auto s = path.split('/');
+	if (s.first().isEmpty())
+		s.removeFirst();
+	result += s;
+
+	if (_url.hasQuery())
+		result << _url.query();
+
+	if (_url.hasFragment())
+		result << _url.fragment();
+
+	return result;
+}
+
 Path Path::parent() const
 {
 	auto path = _url.path();
@@ -250,7 +274,7 @@ QString Path::suffix() const
 	return details::fileName(_url).sliced(stem().size());
 }
 
-QList<QString> Path::suffixes() const
+QStringList Path::suffixes() const
 {
 	auto fileName = details::fileName(_url);
 	const auto bStem = bareStem();
@@ -424,4 +448,38 @@ Path Path::linkTarget() const
 		newUrl = QUrl{};
 
 	return Path{newUrl};
+}
+
+Path Path::join(const QString & rhs) const
+{
+	const auto str = toString();
+	if (str == "/")
+		return Path{QUrl{str + rhs}};
+	else
+		return Path{QUrl{str + '/' + rhs}};
+}
+
+Path Path::join(const QStringList & rhs) const
+{
+	return join(rhs.join('/'));
+}
+
+Path Path::withName(const QString & name) const
+{
+	return parent().join(name);
+}
+
+Path Path::withStem(const QString & stem) const
+{
+	return parent().join(stem + suffix());
+}
+
+Path Path::withBareStem(const QString & bareStem) const
+{
+	return parent().join(bareStem + suffixes().join(""));
+}
+
+Path Path::withSuffix(const QString & suffix) const
+{
+	return parent().join(stem() + suffix);
 }
