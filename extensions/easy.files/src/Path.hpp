@@ -6,6 +6,22 @@
 
 namespace easy::files
 {
+	class Owner
+	{
+		Q_GADGET
+		QML_ANONYMOUS
+		Q_PROPERTY(QString name MEMBER name FINAL)
+		Q_PROPERTY(uint id MEMBER id FINAL)
+		Q_PROPERTY(bool valid READ valid FINAL)
+		QML_STRUCTURED_VALUE
+
+	public:
+		QString name;
+		uint id;
+
+		bool valid() const { return id != static_cast<uint>(-2); }
+	};
+
 	class Path
 	{
 		Q_GADGET
@@ -41,6 +57,12 @@ namespace easy::files
 		Q_PROPERTY(QString stem READ stem FINAL)
 		Q_PROPERTY(QString suffix READ suffix FINAL)
 		Q_PROPERTY(QList<QString> suffixes READ suffixes FINAL)
+		Q_PROPERTY(QDateTime born READ born FINAL)
+		Q_PROPERTY(QDateTime lastModified READ lastModified FINAL)
+		Q_PROPERTY(QDateTime lastRead READ lastRead FINAL)
+		Q_PROPERTY(QDateTime metadataModified READ metadataModified FINAL)
+		Q_PROPERTY(easy::files::Owner group READ group FINAL)
+		Q_PROPERTY(easy::files::Owner owner READ owner FINAL)
 
 		Q_PROPERTY(QString scheme READ scheme WRITE setScheme FINAL)
 		Q_PROPERTY(QString user READ user WRITE setUser FINAL)
@@ -50,6 +72,10 @@ namespace easy::files
 		Q_PROPERTY(QString path READ path WRITE setPath FINAL)
 		Q_PROPERTY(QString query READ query WRITE setQuery FINAL)
 		Q_PROPERTY(QString fragment READ fragment WRITE setFragment FINAL)
+
+		Q_PROPERTY(easy::files::Path absolute READ absolute FINAL)
+		Q_PROPERTY(easy::files::Path normalized READ normalized FINAL)
+		Q_PROPERTY(easy::files::Path linkTarget READ linkTarget FINAL)
 
 		QML_VALUE_TYPE(path)
 		// QML_EXTENDED(easy::files::Path)
@@ -91,6 +117,16 @@ namespace easy::files
 		QString stem() const;
 		QString suffix() const;
 		QList<QString> suffixes() const;
+		QDateTime born() const;
+		QDateTime lastModified() const;
+		QDateTime lastRead() const;
+		QDateTime metadataModified() const;
+		Owner group() const;
+		Owner owner() const;
+
+		Path absolute() const;
+		Path normalized() const;
+		Path linkTarget() const;
 
 		Q_INVOKABLE QString toString() const;
 

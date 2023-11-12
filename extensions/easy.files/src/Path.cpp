@@ -352,3 +352,76 @@ void Path::setFragment(const QString & fragment)
 {
 	_url.setFragment(fragment);
 }
+
+QDateTime Path::born() const
+{
+	const auto path = details::urlToPath(_url);
+	return QFileInfo{path}.birthTime();
+}
+
+QDateTime Path::lastModified() const
+{
+	const auto path = details::urlToPath(_url);
+	return QFileInfo{path}.lastModified();
+}
+
+QDateTime Path::lastRead() const
+{
+	const auto path = details::urlToPath(_url);
+	return QFileInfo{path}.lastRead();
+}
+
+QDateTime Path::metadataModified() const
+{
+	const auto path = details::urlToPath(_url);
+	return QFileInfo{path}.metadataChangeTime();
+}
+
+Owner Path::group() const
+{
+	const auto path = details::urlToPath(_url);
+	QFileInfo fi{path};
+	return Owner{fi.group(), fi.groupId()};
+}
+
+Owner Path::owner() const
+{
+	const auto path = details::urlToPath(_url);
+	QFileInfo fi{path};
+	return Owner{fi.owner(), fi.ownerId()};
+}
+
+Path Path::absolute() const
+{
+	auto path = _url.isLocalFile() ? _url.toLocalFile() : _url.path();
+	if (_url.scheme() == "qrc")
+		path.prepend(':');
+
+	QUrl newUrl = _url;
+	auto absPath = QFileInfo{path}.absoluteFilePath();
+	if (_url.scheme() == "qrc")
+		absPath.removeFirst();
+	newUrl.setPath(absPath);
+	return Path{newUrl};
+}
+
+Path Path::normalized() const
+{
+	return Path{_url.adjusted(QUrl::NormalizePathSegments | QUrl::PreferLocalFile)};
+}
+
+Path Path::linkTarget() const
+{
+	const auto path = details::urlToPath(_url);
+	QFileInfo fi{path};
+
+	QUrl newUrl = _url;
+	if (fi.isJunction())
+		newUrl.setPath(fi.junctionTarget());
+	else if (fi.isSymbolicLink())
+		newUrl.setPath(fi.symLinkTarget());
+	else
+		newUrl = QUrl{};
+
+	return Path{newUrl};
+}
