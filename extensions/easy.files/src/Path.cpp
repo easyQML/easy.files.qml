@@ -459,7 +459,7 @@ Path Path::linkTarget() const
 Path Path::join(const QString & rhs) const
 {
 	const auto str = toString();
-	if (str == "/")
+	if (str.endsWith("///") || (str.endsWith('/') && !str.endsWith("//")))
 		return Path{QUrl{str + rhs}};
 	else
 		return Path{QUrl{str + '/' + rhs}};
