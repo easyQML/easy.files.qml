@@ -2,6 +2,7 @@ import qbs
 import qbs.FileInfo
 
 DynamicLibrary {
+	Depends { name: 'bundle' }
 	Depends { name: 'Qt.qml' }
 	Depends { name: 'easy.qmldir' }
 
