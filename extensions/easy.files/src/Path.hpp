@@ -166,6 +166,9 @@ namespace easy::files
 		Q_INVOKABLE Path withBareStem(const QString & bareStem) const;
 		Q_INVOKABLE Path withSuffix(const QString & suffix) const;
 
+		bool operator==(const easy::files::Path & rhs) const;
+		bool operator!=(const easy::files::Path & rhs) const;
+
 	private:
 		QUrl _url;
 	};
