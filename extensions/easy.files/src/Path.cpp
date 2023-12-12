@@ -494,8 +494,3 @@ bool Path::operator==(const Path & rhs) const
 {
 	return _url == rhs._url;
 }
-
-bool Path::operator!=(const Path & rhs) const
-{
-	return !(*this == rhs);
-}
