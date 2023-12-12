@@ -32,7 +32,7 @@ Path TextFile::source() const
 	return _source.value();
 }
 
-QBindable<Path> TextFile::bindableSource() const
+QBindable<Path> TextFile::bindableSource()
 {
 	return &_source;
 }

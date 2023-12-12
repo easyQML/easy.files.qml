@@ -26,7 +26,7 @@ namespace easy::files
 
 		easy::files::Path source() const;
 		Q_INVOKABLE void setSource(const easy::files::Path & source);
-		QBindable<easy::files::Path> bindableSource() const;
+		QBindable<easy::files::Path> bindableSource();
 
 	signals:
 		void sourceChanged(const easy::files::Path & source);
