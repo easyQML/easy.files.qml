@@ -1,6 +1,8 @@
 import qbs
 import qbs.FileInfo
 
+import easy as Easy
+
 DynamicLibrary {
 	Depends { name: 'bundle' }
 	Depends { name: 'Qt.qml' }
@@ -58,7 +60,7 @@ DynamicLibrary {
 		fileTags: ['qt.core.resource_data', 'easy.qmldir.inputs']
 	}
 
-	EasyQmldir {
+	Easy.Qmldir {
 		qbs.install: true
 		qbs.installDir: product.installDir
 	}
